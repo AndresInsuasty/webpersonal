@@ -6,7 +6,7 @@ html_base = """
     <li><a href="/">Portada</a></li>
     <li><a href="/about-me/">Acerca de</a></li>
     <li><a href="/portafolio/">Portafolio</a></li>
-    <li><a href="/contacto/">Contacto</a></li>
+    <li><a href="/contact/">Contacto</a></li>
 </ul>
 """
 
@@ -14,32 +14,16 @@ html_base = """
 # Create your views here.
 
 def home(request):
-    return HttpResponse(html_base+"""
-    <h2>portada</h2>
-    <p>Esta es la portada</p>
-    """)
+    return render(request,"core/home.html")
 
 
 def about(request):
-    return HttpResponse(html_base+"""
-    <h2>Acerca de</h2>
-    <p>Me llamo Andres y soy Ingeniero programador</p>
-    """)
+    return render(request,'core/about.html')
 
 
-def portafolio(request):
-    return HttpResponse(html_base+"""
-    <h2>Portafolio</h2>
-    <ul>
-        <li>Programacion</li>
-        <li>Desarrollo Web</li>
-        <li>Inteligencia artificial</li>
-    </ul>
-    """)
+def portfolio(request):
+    return render(request,'core/portfolio.html')
 
 
 def contacto(request):
-    return HttpResponse(html_base+"""
-    <h2>Contacto</h2>
-    <p>Escribeme al correo andresinsuastyd10@gmail.com con tus inquietudes</p>
-    """)
+    return render(request,'core/contact.html')
