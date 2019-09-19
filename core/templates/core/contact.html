@@ -1,11 +1,30 @@
 {% extends 'core/base.html' %}
 
 
+{% block background %}{% load static %}{%static 'core/img/contactus-bg.jpg' %}{% endblock %}
+
+{% block header %}
+<h1>Contacto</h1>
+<span class="subheading">Asesoría</span>
+{% endblock %}
+
 {% block title %}
 Contacto
 {% endblock %}
 
 {% block content %}
-<h2>Contacto</h2>
-<p>Escribeme al correo andresinsuastyd10@gmail.com con tus inquietudes</p>
+<div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <p>Estamos locos... pero innovamos y hacemos las cosas bien, deberias contactarnos</p>
+            <br>
+            <p><b>Correo:</b> andresinsuastyd10@gmail.com</p>
+            <p><b>Celular:</b> 317 834 6569 - 301 794 8737</p>
+            <p><b>Honorarios:</b> 60€/h (precio base)</p>
+          </div>
+        </div>
+      </div>
+  
+      <hr>
+
 {% endblock %}
