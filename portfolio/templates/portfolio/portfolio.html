@@ -25,6 +25,9 @@ Portafolio
         <div class="col-lg-7 col-md-8">
             <h2 class="section-heading title">{{project.title}}</h2>
             <p>{{project.description}}</p>
+            {% if project.info %}
+            <a href="{{project.info}}" style="color:blue">Mas Informacion</a>
+            {% endif %}
         </div>
     </div>
 {% endfor %}
