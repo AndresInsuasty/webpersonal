@@ -5,11 +5,39 @@
 Portafolio
 {% endblock %}
 
+
+{% block background %}{% load static %}{%static 'core/img/portfolio-bg.jpg' %}{% endblock %}
+
+
+{% block header %}
+<h1>Portafolio</h1>
+<span class="subheading">Currículo</span>
+{% endblock %}
+
 {% block content %}
-<h2>Portafolio</h2>
-<ul>
-    <li>Programacion</li>
-    <li>Desarrollo Web</li>
-    <li>Inteligencia artificial</li>
-</ul>
+<div class="container">
+    <!-- Proyecto -->
+    <div class="row project">
+        <div class="col-lg-3 col-md-4 offset-lg-1">
+            <img class="img-fluid" src="{% load static %}{%static 'core/img/about-bg.jpg'%}" alt="">
+        </div>
+        <div class="col-lg-7 col-md-8">
+            <h2 class="section-heading title">Segundo proyecto</h2>
+            <p>Este aun lo estamos pensando, parece demorar, es una calificacion automatica para pruebas estilo ABCD</p>
+            <p><a href="http://google.com">Más información</a></p>
+        </div>
+    </div>
+    <!-- Proyecto -->
+    <div class="row project">
+        <div class="col-lg-3 col-md-4 offset-lg-1">
+            <img class="img-fluid" src="{% load static %}{% static 'core/img/home-bg.jpg'%}" alt="">
+        </div>
+        <div class="col-lg-7 col-md-8">
+            <h2 class="section-heading title">Plataforma Desprendibles de Nomina</h2>
+            <p>Se presenta una plataforma en la cual se hace gestion y envio de desprendibles de pago de manera
+                automatizada, logrando hacer el proceso por encima de 10 veces mas rapido</p>
+            <p><a href="http://google.com">Más información</a></p>
+        </div>
+    </div>
+</div>
 {% endblock %}
