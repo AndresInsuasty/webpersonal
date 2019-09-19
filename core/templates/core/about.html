@@ -5,9 +5,29 @@
 Acerca de
 {% endblock %}
 
+{% block background %}{% load static %}{%static 'core/img/about-bg.jpg' %}{% endblock %}
 
+{% block header %}
+<h1>Acerca de</h1>
+<span class="subheading">Biografía</span>
+{% endblock %}
 
 {% block content %}
-<h2>Acerca de</h2>
-<p>Me llamo Andres y soy Ingeniero programador</p>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 col-md-4 offset-lg-1">
+            <img class="img-fluid avatar" src="{% load static %}{%static 'core/img/D&A.jpg' %}" alt="">
+        </div>
+        <div class="col-lg-7 col-md-8">
+            <h2 class="section-heading">D&A Soluciones Tecnologicas</h2>
+            <p>Son un par de locos enamorados (algunos dicen que el es mas... inquieto). Esta maravillosa pareja se
+                compone de un ingeniero electronico encantado de programar y estar aprendiendo nuevas cosas, y de una
+                administradora de empresas con gran dedicacion por su trabajo, mucho talento, gran inteligencia y manejo
+                de actividades... ademas es excelente en gestion de calidad y talento humano
+            </p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum ullam eveniet pariatur voluptates
+                odit...</p>
+        </div>
+    </div>
+</div>
 {% endblock %}
