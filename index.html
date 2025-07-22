@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrés Insuasty | Transformo datos en decisiones</title>
+    <meta name="description" content="Ingeniero Electrónico y Científico de Datos. Cofundador de Datos Dinámicos. Especialista en transformar datos en decisiones estratégicas.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0B0E4E',
+                        secondary: '#004AAD',
+                        accent: '#00F0FF',
+                        purple: '#A659ED',
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                        jetbrains: ['JetBrains Mono', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .code-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .hero-bg {
+            background: linear-gradient(135deg, #0B0E4E 0%, #004AAD 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-bg::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%2300F0FF' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.4;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 240, 255, 0.1), 0 10px 10px -5px rgba(0, 240, 255, 0.04);
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -38px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #00F0FF;
+            border: 3px solid #004AAD;
+        }
+        .input-field:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #00F0FF;
+        }
+        .nav-link:hover {
+            color: #00F0FF !important;
+        }
+        .social-icon:hover {
+            transform: translateY(-3px);
+            color: #00F0FF !important;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-primary/90 backdrop-blur-sm z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="text-white font-bold text-xl code-font">Andrés<span class="text-accent">.</span>Insuasty</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#about" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Sobre mí</a>
+                        <a href="#courses" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Cursos</a>
+                        <a href="#portfolio" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Portafolio</a>
+                        <a href="#talks" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Charlas</a>
+                        <a href="#contact" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Contacto</a>
+                        <a href="#courses" class="ml-4 bg-accent text-primary hover:bg-accent/90 px-4 py-2 rounded-md text-sm font-bold transition">Mis cursos</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-300 hover:text-white focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-primary/95 backdrop-blur-lg pb-3">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-primary">Sobre mí</a>
+                <a href="#courses" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-primary">Cursos</a>
+                <a href="#portfolio" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-primary">Portafolio</a>
+                <a href="#talks" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-primary">Charlas</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-primary">Contacto</a>
+                <a href="#courses" class="block ml-2 mt-2 bg-accent text-primary hover:bg-accent/90 px-4 py-2 rounded-md text-sm font-bold w-fit">Mis cursos</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg min-h-screen flex items-center pt-16 pb-20 px-4 sm:px-6 lg:px-8 text-white">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12">
+            <div class="text-center lg:text-left lg:w-1/2">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                    Andrés Insuasty
+                    <span class="block text-accent text-2xl md:text-4xl mt-4">Transformo datos en decisiones</span>
+                </h1>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto lg:mx-0 mb-10 opacity-90">
+                    MSc. Ingeniero Electrónico | Científico de Datos | Cofundador de <span class="text-accent font-medium">Datos Dinámicos</span>
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+                    <a href="#courses" class="bg-accent hover:bg-accent/90 text-primary font-bold py-3 px-8 rounded-lg text-lg transition duration-300 transform hover:scale-105">
+                        Mis cursos
+                    </a>
+                    <a href="#contact" class="glass-card hover:bg-white/10 border border-white/20 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-300 transform hover:scale-105">
+                        Contáctame
+                    </a>
+                </div>
+            </div>
+            <div class="lg:w-1/2 flex justify-center mt-10 lg:mt-0">
+                <div class="glass-card rounded-full p-2 w-64 h-64 md:w-80 md:h-80 border-2 border-white/20 shadow-xl overflow-hidden">
+                    <img src="img/andres.png" alt="Andrés Insuasty" class="w-full h-full object-cover rounded-full">
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-10 left-0 right-0 flex justify-center">
+            <a href="#about" class="text-white animate-bounce">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4">Sobre mí</h2>
+                <div class="w-20 h-1 bg-accent mx-auto"></div>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-1/2">
+                    <div class="glass-card rounded-xl p-8 shadow-lg">
+                        <p class="text-lg mb-6">
+                            Soy Andrés Insuasty, Ingeniero Electrónico con Maestría en Ciencias y apasionado por la ciencia de datos. 
+                            Como cofundador de <span class="text-accent font-medium">Datos Dinámicos</span>, ayudo a empresas a transformar 
+                            sus datos en decisiones estratégicas mediante soluciones de inteligencia artificial y análisis avanzado.
+                        </p>
+                        <p class="text-lg mb-6">
+                            Con más de 8 años de experiencia, he liderado proyectos en múltiples industrias, desde telecomunicaciones 
+                            hasta salud, siempre buscando extraer el máximo valor de los datos.
+                        </p>
+                        <p class="text-lg">
+                            Mi misión es democratizar el conocimiento en ciencia de datos, por eso además de consultoría, 
+                            me dedico a la formación de nuevos profesionales a través de cursos y talleres prácticos.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2">
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="bg-primary rounded-xl p-6 text-white shadow-lg">
+                            <div class="text-4xl font-bold text-accent mb-2">50+</div>
+                            <div class="text-lg">Proyectos completados</div>
+                        </div>
+                        <div class="bg-secondary rounded-xl p-6 text-white shadow-lg">
+                            <div class="text-4xl font-bold text-accent mb-2">5K+</div>
+                            <div class="text-lg">Alumnos formados</div>
+                        </div>
+                        <div class="bg-gradient-to-br from-primary to-secondary rounded-xl p-6 text-white shadow-lg">
+                            <div class="text-4xl font-bold text-accent mb-2">12+</div>
+                            <div class="text-lg">Cursos publicados</div>
+                        </div>
+                        <div class="bg-purple rounded-xl p-6 text-white shadow-lg">
+                            <div class="text-4xl font-bold text-accent mb-2">100+</div>
+                            <div class="text-lg">Charlas impartidas</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 glass-card rounded-xl p-6">
+                        <h3 class="text-xl font-bold text-primary mb-4">Habilidades técnicas</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-gray-100 text-primary px-3 py-1 rounded-full text-sm font-medium">Python</span>
+                            <span class="bg-gray-100 text-primary px-3 py-1 rounded-full text-sm font-medium">TensorFlow</span>
+                            <span class="bg-gray-100 text-primary px-3 py-1 rounded-full text-sm font-medium">PyTorch</span>
+                            <span class="bg-gray-100 text-primary px-3 py-1 rounded-full text-sm font-medium">SQL</span>
+                            <span class="bg-gray-100 text-primary px-3 py-1 rounded-full text-sm font-medium">Spark</span>
+                            <span class="bg-gray-100 text-primary px-3 py-1 rounded-full text-sm font-medium">AWS</span>
+                            <span class="bg-gray-100 text-primary px-3 py-1 rounded-full text-sm font-medium">Docker</span>
+                            <span class="bg-gray-100 text-primary px-3 py-1 rounded-full text-sm font-medium">Kubernetes</span>
+                            <span class="bg-gray-100 text-primary px-3 py-1 rounded-full text-sm font-medium">MLOps</span>
+                            <span class="bg-gray-100 text-primary px-3 py-1 rounded-full text-sm font-medium">Data Engineering</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section id="courses" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4">Mis Cursos</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Aprende ciencia de datos con cursos prácticos y actualizados</p>
+                <div class="w-20 h-1 bg-accent mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Course 1 -->
+                <div class="course-card bg-white rounded-xl overflow-hidden shadow-lg transition duration-300 hover:shadow-xl">
+                    <div class="h-48 bg-gradient-to-r from-primary to-secondary flex items-center justify-center">
+                        <i class="fas fa-chart-line text-white text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-primary mb-2">Machine Learning con Python</h3>
+                        <p class="text-gray-600 mb-4">Aprende los fundamentos de ML y construye modelos predictivos desde cero.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500"><i class="fas fa-star text-yellow-400"></i> 4.9 (1.2K reseñas)</span>
+                            <span class="text-sm font-bold text-accent">$29.99</span>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6">
+                        <a href="#" class="block w-full bg-primary hover:bg-primary/90 text-white text-center font-bold py-2 px-4 rounded-lg transition">
+                            Ver en Udemy <i class="fas fa-external-link-alt ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Course 2 -->
+                <div class="course-card bg-white rounded-xl overflow-hidden shadow-lg transition duration-300 hover:shadow-xl">
+                    <div class="h-48 bg-gradient-to-r from-secondary to-accent flex items-center justify-center">
+                        <i class="fas fa-database text-white text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-primary mb-2">Data Engineering Avanzado</h3>
+                        <p class="text-gray-600 mb-4">Domina pipelines de datos con Airflow, Spark y arquitecturas en la nube.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500"><i class="fas fa-star text-yellow-400"></i> 4.8 (850 reseñas)</span>
+                            <span class="text-sm font-bold text-accent">$39.99</span>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6">
+                        <a href="#" class="block w-full bg-primary hover:bg-primary/90 text-white text-center font-bold py-2 px-4 rounded-lg transition">
+                            Ver en Datos Dinámicos <i class="fas fa-external-link-alt ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Course 3 -->
+                <div class="course-card bg-white rounded-xl overflow-hidden shadow-lg transition duration-300 hover:shadow-xl">
+                    <div class="h-48 bg-gradient-to-r from-purple to-accent flex items-center justify-center">
+                        <i class="fas fa-robot text-white text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-primary mb-2">LLMs y RAG en Producción</h3>
+                        <p class="text-gray-600 mb-4">Implementa modelos de lenguaje y sistemas RAG para aplicaciones reales.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500"><i class="fas fa-star text-yellow-400"></i> 5.0 (320 reseñas)</span>
+                            <span class="text-sm font-bold text-accent">$49.99</span>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6">
+                        <a href="#" class="block w-full bg-primary hover:bg-primary/90 text-white text-center font-bold py-2 px-4 rounded-lg transition">
+                            Ver en Udemy <i class="fas fa-external-link-alt ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="inline-flex items-center text-accent font-bold text-lg hover:text-accent/80 transition">
+                    Ver todos los cursos <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4">Casos de Éxito</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Proyectos destacados donde transformamos datos en resultados</p>
+                <div class="w-20 h-1 bg-accent mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="glass-card rounded-xl overflow-hidden shadow-lg transition duration-300 hover:shadow-xl">
+                    <div class="h-48 bg-gradient-to-r from-primary to-purple flex items-center justify-center">
+                        <i class="fas fa-user-slash text-white text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <span class="bg-accent text-primary text-xs font-bold px-2 py-1 rounded mr-2">Predicción</span>
+                            <span class="bg-gray-100 text-primary text-xs font-bold px-2 py-1 rounded">Telecom</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary mb-2">Reducción de Churn en Telecom</h3>
+                        <p class="text-gray-600 mb-4">
+                            Sistema predictivo que identifica clientes con alta probabilidad de abandono, permitiendo acciones preventivas.
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-accent mt-1 mr-2"></i>
+                                <span>Reducción del 32% en tasa de abandono</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-accent mt-1 mr-2"></i>
+                                <span>ROI de 5.8x en 6 meses</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-accent mt-1 mr-2"></i>
+                                <span>Modelo XGBoost con 89% de precisión</span>
+                            </li>
+                        </ul>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-calendar-alt mr-2"></i>
+                            <span>2023 - Cliente confidencial</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="glass-card rounded-xl overflow-hidden shadow-lg transition duration-300 hover:shadow-xl">
+                    <div class="h-48 bg-gradient-to-r from-secondary to-accent flex items-center justify-center">
+                        <i class="fas fa-microchip text-white text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <span class="bg-accent text-primary text-xs font-bold px-2 py-1 rounded mr-2">IoT</span>
+                            <span class="bg-gray-100 text-primary text-xs font-bold px-2 py-1 rounded">Manufactura</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary mb-2">Monitoreo Predictivo Industrial</h3>
+                        <p class="text-gray-600 mb-4">
+                            Plataforma IoT para predecir fallas en equipos industriales mediante análisis de vibraciones y temperatura.
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-accent mt-1 mr-2"></i>
+                                <span>Reducción del 45% en tiempo de inactividad</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-accent mt-1 mr-2"></i>
+                                <span>Detección de anomalías con 92% de precisión</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-accent mt-1 mr-2"></i>
+                                <span>Arquitectura edge-cloud híbrida</span>
+                            </li>
+                        </ul>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-calendar-alt mr-2"></i>
+                            <span>2022 - Empresa multinacional</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="glass-card rounded-xl overflow-hidden shadow-lg transition duration-300 hover:shadow-xl">
+                    <div class="h-48 bg-gradient-to-r from-purple to-secondary flex items-center justify-center">
+                        <i class="fas fa-brain text-white text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <span class="bg-accent text-primary text-xs font-bold px-2 py-1 rounded mr-2">LLM</span>
+                            <span class="bg-gray-100 text-primary text-xs font-bold px-2 py-1 rounded">SaaS</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary mb-2">RAG-as-a-Service</h3>
+                        <p class="text-gray-600 mb-4">
+                            Plataforma SaaS que permite a empresas implementar sistemas de búsqueda aumentada por generación (RAG).
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-accent mt-1 mr-2"></i>
+                                <span>Reducción del 70% en tiempo de implementación</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-accent mt-1 mr-2"></i>
+                                <span>Integración con múltiples modelos LLM</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-accent mt-1 mr-2"></i>
+                                <span>15 clientes en fase beta</span>
+                            </li>
+                        </ul>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-calendar-alt mr-2"></i>
+                            <span>2024 - Datos Dinámicos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Talks Section -->
+    <section id="talks" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4">Charlas & Talleres</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Eventos donde comparto conocimiento y experiencias</p>
+                <div class="w-20 h-1 bg-accent mx-auto mt-4"></div>
+            </div>
+            
+            <div class="relative">
+                <!-- Timeline -->
+                <div class="border-l-2 border-accent/50 pl-8 ml-4 space-y-12">
+                    <!-- Event 1 -->
+                    <div class="relative timeline-item">
+                        <div class="glass-card rounded-xl p-6 shadow-lg">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-3">
+                                <h3 class="text-xl font-bold text-primary">El futuro de los LLMs en los negocios</h3>
+                                <span class="text-sm font-medium bg-accent text-primary px-3 py-1 rounded-full mt-2 sm:mt-0">Conferencia</span>
+                            </div>
+                            <p class="text-gray-600 mb-4">
+                                Explorando cómo los modelos de lenguaje grandes están transformando las operaciones empresariales y creando nuevas oportunidades.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-gray-100 text-primary px-2 py-1 rounded-full text-xs font-medium">Generative AI</span>
+                                <span class="bg-gray-100 text-primary px-2 py-1 rounded-full text-xs font-medium">Transformación Digital</span>
+                                <span class="bg-gray-100 text-primary px-2 py-1 rounded-full text-xs font-medium">Automatización</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center text-sm text-gray-500">
+                                    <i class="fas fa-calendar-day mr-2"></i>
+                                    <span>15 Junio 2024 | 16:00</span>
+                                </div>
+                                <a href="#" class="text-accent font-medium text-sm hover:text-accent/80 transition">
+                                    Más detalles <i class="fas fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Event 2 -->
+                    <div class="relative timeline-item">
+                        <div class="glass-card rounded-xl p-6 shadow-lg">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-3">
+                                <h3 class="text-xl font-bold text-primary">Taller: MLOps en la práctica</h3>
+                                <span class="text-sm font-medium bg-purple text-white px-3 py-1 rounded-full mt-2 sm:mt-0">Taller</span>
+                            </div>
+                            <p class="text-gray-600 mb-4">
+                                Sesión práctica donde implementaremos un pipeline completo de MLOps con GitHub Actions, MLflow y FastAPI.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-gray-100 text-primary px-2 py-1 rounded-full text-xs font-medium">MLOps</span>
+                                <span class="bg-gray-100 text-primary px-2 py-1 rounded-full text-xs font-medium">CI/CD</span>
+                                <span class="bg-gray-100 text-primary px-2 py-1 rounded-full text-xs font-medium">Python</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center text-sm text-gray-500">
+                                    <i class="fas fa-calendar-day mr-2"></i>
+                                    <span>28 Mayo 2024 | 09:00 - 13:00</span>
+                                </div>
+                                <a href="#" class="text-accent font-medium text-sm hover:text-accent/80 transition">
+                                    Más detalles <i class="fas fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Event 3 -->
+                    <div class="relative timeline-item">
+                        <div class="glass-card rounded-xl p-6 shadow-lg">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-3">
+                                <h3 class="text-xl font-bold text-primary">De datos a decisiones: Casos reales</h3>
+                                <span class="text-sm font-medium bg-secondary text-white px-3 py-1 rounded-full mt-2 sm:mt-0">Keynote</span>
+                            </div>
+                            <p class="text-gray-600 mb-4">
+                                Presentación de casos reales donde el análisis de datos generó impactos significativos en diferentes industrias.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-gray-100 text-primary px-2 py-1 rounded-full text-xs font-medium">Business Intelligence</span>
+                                <span class="bg-gray-100 text-primary px-2 py-1 rounded-full text-xs font-medium">Data Storytelling</span>
+                                <span class="bg-gray-100 text-primary px-2 py-1 rounded-full text-xs font-medium">ROI</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center text-sm text-gray-500">
+                                    <i class="fas fa-calendar-day mr-2"></i>
+                                    <span>10 Abril 2024 | 11:30</span>
+                                </div>
+                                <a href="#" class="text-accent font-medium text-sm hover:text-accent/80 transition">
+                                    Ver grabación <i class="fas fa-video ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="bg-primary hover:bg-primary/90 text-white font-bold py-3 px-8 rounded-lg text-lg inline-flex items-center transition transform hover:scale-105">
+                    Reservar conferencia <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4">Contáctame</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">¿Listo para transformar tus datos en decisiones estratégicas?</p>
+                <div class="w-20 h-1 bg-accent mx-auto mt-4"></div>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row gap-12">
+                <div class="lg:w-1/2">
+                    <form class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+                                <input type="text" id="name" class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent" placeholder="Tu nombre">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                <input type="email" id="email" class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent" placeholder="tu@email.com">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Asunto</label>
+                            <input type="text" id="subject" class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent" placeholder="¿Cómo puedo ayudarte?">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Mensaje</label>
+                            <textarea id="message" rows="5" class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent" placeholder="Describe tu proyecto o consulta..."></textarea>
+                        </div>
+                        <div>
+                            <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 px-6 rounded-lg text-lg transition transform hover:scale-[1.01]">
+                                Enviar mensaje <i class="fas fa-paper-plane ml-2"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="lg:w-1/2">
+                    <div class="glass-card rounded-xl p-8 h-full">
+                        <h3 class="text-2xl font-bold text-primary mb-6">Información de contacto</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 bg-primary/10 p-3 rounded-lg text-primary">
+                                    <i class="fas fa-envelope text-xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-sm font-medium text-gray-500">Email</h4>
+                                    <a href="mailto:hola@andresinsuasty.com" class="text-lg font-medium text-primary hover:text-accent transition">hola@andresinsuasty.com</a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 bg-primary/10 p-3 rounded-lg text-primary">
+                                    <i class="fas fa-globe text-xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-sm font-medium text-gray-500">Sitio web</h4>
+                                    <a href="https://andresinsuasty.com" target="_blank" class="text-lg font-medium text-primary hover:text-accent transition">andresinsuasty.com</a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 bg-primary/10 p-3 rounded-lg text-primary">
+                                    <i class="fas fa-building text-xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-sm font-medium text-gray-500">Empresa</h4>
+                                    <a href="#" class="text-lg font-medium text-primary hover:text-accent transition">Datos Dinámicos</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-12">
+                            <h4 class="text-lg font-bold text-primary mb-4">Sígueme en redes</h4>
+                            <div class="flex space-x-4">
+                                <a href="#" class="social-icon bg-gray-100 hover:bg-primary/10 text-primary w-12 h-12 rounded-full flex items-center justify-center text-xl transition">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                                <a href="#" class="social-icon bg-gray-100 hover:bg-primary/10 text-primary w-12 h-12 rounded-full flex items-center justify-center text-xl transition">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="#" class="social-icon bg-gray-100 hover:bg-primary/10 text-primary w-12 h-12 rounded-full flex items-center justify-center text-xl transition">
+                                    <i class="fab fa-youtube"></i>
+                                </a>
+                                <a href="#" class="social-icon bg-gray-100 hover:bg-primary/10 text-primary w-12 h-12 rounded-full flex items-center justify-center text-xl transition">
+                                    <i class="fab fa-tiktok"></i>
+                                </a>
+                                <a href="#" class="social-icon bg-gray-100 hover:bg-primary/10 text-primary w-12 h-12 rounded-full flex items-center justify-center text-xl transition">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="#" class="social-icon bg-gray-100 hover:bg-primary/10 text-primary w-12 h-12 rounded-full flex items-center justify-center text-xl transition">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-white py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <span class="text-2xl font-bold code-font">Andrés<span class="text-accent">.</span>Insuasty</span>
+                    <p class="mt-2 text-gray-300">Transformando datos en decisiones desde 2016</p>
+                </div>
+                <div class="flex flex-col items-center md:items-end">
+                    <div class="flex space-x-6 mb-4">
+                        <a href="#" class="text-gray-300 hover:text-white transition">Privacidad</a>
+                        <a href="#" class="text-gray-300 hover:text-white transition">Términos</a>
+                        <a href="#contact" class="text-gray-300 hover:text-white transition">Contacto</a>
+                    </div>
+                    <p class="text-gray-400 text-sm">© 2024 Andrés Insuasty. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Schema.org Markup -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Andrés Insuasty",
+        "jobTitle": "MSc. Ingeniero Electrónico | Científico de Datos",
+        "url": "https://andresinsuasty.com",
+        "sameAs": [
+            "https://linkedin.com/in/andresinsuasty",
+            "https://github.com/andresinsuasty",
+            "https://youtube.com/@DatosDinámicos",
+            "https://tiktok.com/@andresinsuasty",
+            "https://instagram.com/andresinsuasty",
+            "https://twitter.com/andresinsuasty"
+        ],
+        "worksFor": {
+            "@type": "Organization",
+            "name": "Datos Dinámicos"
+        }
+    }
+    </script>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        // Scroll reveal animation
+        ScrollReveal().reveal('.hero-bg h1', {
+            delay: 200,
+            distance: '20px',
+            origin: 'bottom',
+            easing: 'ease-in-out'
+        });
+        
+        ScrollReveal().reveal('.hero-bg p', {
+            delay: 300,
+            distance: '20px',
+            origin: 'bottom',
+            easing: 'ease-in-out'
+        });
+        
+        ScrollReveal().reveal('.hero-bg a', {
+            delay: 400,
+            distance: '20px',
+            origin: 'bottom',
+            easing: 'ease-in-out',
+            interval: 100
+        });
+        
+        ScrollReveal().reveal('.glass-card', {
+            delay: 200,
+            distance: '20px',
+            origin: 'bottom',
+            easing: 'ease-in-out',
+            interval: 100
+        });
+        
+        ScrollReveal().reveal('.course-card', {
+            delay: 200,
+            distance: '20px',
+            origin: 'bottom',
+            easing: 'ease-in-out',
+            interval: 100
+        });
+        
+        ScrollReveal().reveal('.timeline-item', {
+            delay: 200,
+            distance: '20px',
+            origin: 'bottom',
+            easing: 'ease-in-out',
+            interval: 100
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const offset = 80; // Adjust for fixed header
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - offset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add shadow to navbar on scroll
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 10) {
+                nav.classList.add('shadow-lg');
+            } else {
+                nav.classList.remove('shadow-lg');
+            }
+        });
+    </script>
+</body>
+</html>
